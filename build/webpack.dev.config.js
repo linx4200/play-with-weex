@@ -1,6 +1,7 @@
 var path = require('path');
 var fs = require('fs');
 var webpack = require('webpack');
+var config = require('../config');
 
 var entry = {};
 
@@ -30,11 +31,16 @@ var bannerPlugin = new webpack.BannerPlugin(banner, {
   raw: true
 })
 
-module.exports = {
+var webpackConfig = {
   entry: entry,
   output : {
-    path: '.',
+    path: path.join(__dirname, '..'),
+    publicPath: config.dev.assetsPublicPath,
     filename: '[name].js'
+  },
+  resolve: {
+    extensions: ['', '.js', '.vue'],
+    fallback: [path.join(__dirname, '../node_modules')]
   },
   module: {
     loaders: [
@@ -44,5 +50,18 @@ module.exports = {
       }
     ]
   },
-  plugins: [bannerPlugin]
+  plugins: [
+    bannerPlugin,
+    // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ]
 }
+
+// add hot-reload related code to entry chunks
+Object.keys(webpackConfig.entry).forEach(function (name) {
+  webpackConfig.entry[name] = ['./build/dev-client'].concat(webpackConfig.entry[name])
+})
+
+module.exports = webpackConfig;

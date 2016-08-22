@@ -1,13 +1,12 @@
 {
-  "name": "weex_vue_test",
+  "name": "playWeex",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build:browser": "webpack --config build/webpack.browser.config.js",
-    "build:vue": "webpack --config build/webpack.examples.vue.config.js",
-    "serve": "serve ./ -p 12580",
-    "build": "npm run build:vue && npm run serve",
+    "build:vue": "webpack --config build/webpack.dev.config.js",
+    "dev": "npm run build:vue && node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -41,11 +40,13 @@
     "babel-core": "^6.13.2",
     "babel-loader": "^6.2.4",
     "css-loader": "^0.23.1",
+    "event-source-polyfill": "0.0.7",
+    "express": "^4.14.0",
     "json-loader": "^0.5.4",
-    "serve": "^1.4.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
-    "weex-loader": "^0.2.0",
-    "webpack-hot-middleware": "^2.6.0"
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.6.0",
+    "weex-loader": "^0.2.0"
   }
 }
