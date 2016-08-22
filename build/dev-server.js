@@ -45,6 +45,8 @@ module.exports = function (app) {
   // serve pure static assets
   var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
   app.use(staticPath, express.static('./static'))
+
+  app.use(express.static(path.join(__dirname, '..')));
 }
 
 // var app = express()
