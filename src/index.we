@@ -1,5 +1,7 @@
 <template>
-  <example-list items="{{items}}" root="{{root}}"></example-list>
+  <div>
+    <example-list items="{{items}}" root="{{root}}"></example-list>
+  </div>
 </template>
 
 <script>
