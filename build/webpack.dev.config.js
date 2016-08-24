@@ -27,35 +27,30 @@ walk();
 
 var webpackConfig = {
   entry: entry,
-  output : {
+  output: {
     path: path.join(__dirname, '..'),
     publicPath: config.dev.assetsPublicPath,
     filename: '[name].js'
   },
-  // resolve: {
-  //   extensions: ['', '.js', '.we'],
-  //   fallback: [path.join(__dirname, '../node_modules')]
-  // },
+  resolve: {
+    extensions: ['', '.js', '.we'],
+    fallback: [path.join(__dirname, '../node_modules')]
+  },
   module: {
     loaders: [
       {
         test: /\.we(\?[^?]+)?$/,
         loader: 'weex'
+      },
+      {
+        test: /\.js(\?[^?]+)?$/,
+        loader: 'babel',
+        query: {
+          presets: ['es2015', 'stage-2']
+        }
       }
-      // {
-      //   test: /\.js(\?[^?]+)?$/,
-      //   loader: 'weex?type=script'
-      // },
-      // {
-      //   test: /\.css(\?[^?]+)?$/,
-      //   loader: 'weex?type=style'
-      // },
-      // {
-      //   test: /\.html(\?[^?]+)?$/,
-      //   loader: 'weex?type=tpl'
-      // }
     ]
-  },
+  }
   // plugins: [
   //   // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
   //   new webpack.optimize.OccurenceOrderPlugin(),

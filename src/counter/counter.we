@@ -1,0 +1,30 @@
+<template>
+  <div>
+    <text>Clicked: {{ $store.state.count }} times, count is {{ evenOrOdd }}.</text>
+    <text onclick="increment">+</text>
+    <text onclick="decrement">-</text>
+    <text onclick="incrementIfOdd">Increment if odd</text>
+    <text onclick="incrementAsync">Increment async</text>
+  </div>
+</template>
+
+<script>
+import { init, mapGetters, mapActions } from '../lib/weex-x.js'
+import store from './store.js'
+
+export {
+  store,
+  init
+}
+
+export const computed = mapGetters([
+  'evenOrOdd'
+])
+
+export const methods = mapActions([
+  'increment',
+  'decrement',
+  'incrementIfOdd',
+  'incrementAsync'
+])
+</script>

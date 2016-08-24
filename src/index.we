@@ -13,6 +13,7 @@
         // `name` key is the example filename without '.we'
         // Support sub directory, e.g. 'new-fashion/index'
         {name: 'hello', title: 'Hello World'},
+        {name: 'counter/counter', title: '[Weex-x] Counter'},
       ]
     }
   }
