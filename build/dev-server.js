@@ -46,16 +46,9 @@ module.exports = function (app) {
   var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
   app.use(staticPath, express.static('./static'))
 
+  // servr bundle
+  var bundleStaticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.bundleDirectory)
+  app.use(bundleStaticPath, express.static('./src/build'))
+
   app.use(express.static(path.join(__dirname, '..')));
 }
-
-// var app = express()
-
-
-// module.exports = app.listen(port, function (err) {
-//   if (err) {
-//     console.log(err)
-//     return
-//   }
-//   console.log('Listening at http://localhost:' + port + '\n')
-// })

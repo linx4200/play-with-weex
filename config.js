@@ -20,6 +20,7 @@ module.exports = {
     // env: require('./dev.env'),
     port: 12580,
     assetsSubDirectory: 'static',
+    bundleDirectory: 'src/build',
     assetsPublicPath: '/',
     proxyTable: {}
   }

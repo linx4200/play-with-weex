@@ -1,32 +1,32 @@
 <template>
   <list>
-    <cell v-for="item in items" append="tree">
-      <example-list-item :title="item.title" :url="item.url"></example-list-item>
+    <cell repeat="{{items}}">
+      <example-list-item title="{{title}}" url="{{url}}"></example-list-item>
     </cell>
   </list>
 </template>
 
 <script>
+  require('weex-components');
   module.exports = {
-    components: {
-      'example-list-item': require('./example-list-item.vue')
-    },
-    props: {
-      dir: {
-        default: 'src'
-      }, // examples, test ...
-      items: {
-        default: [
-          {name: 'hello', title: 'Hello World', url: ''}
-        ]
-      }
+    data: {
+      root: '', // examples, examples/syntax, test ...
+      items: [
+        {name: 'hello', title: 'Hello World', url: ''}
+      ]
     },
     created: function() {
-      console.log('created')
       var bundleUrl = this.$getConfig().bundleUrl;
       console.log('hit', bundleUrl);
+      var dirs = this.root.split('/');
+      dirs.forEach(function(dir, index) {
+        if (!dir) dirs.splice(index, 1);
+      });
+      var root = dirs.length > 0 ? dirs[0] : '';
+      var subRoot = dirs.length > 1 ? dirs.slice(1).join('/') + '/' : '';
+
       var nativeBase;
-      var isAndroidAssets = bundleUrl.indexOf('your_current_IP') >= 0;
+      var isAndroidAssets = bundleUrl.indexOf('your_current_IP') >= 0 || bundleUrl.indexOf('file://assets/')>=0;
       var isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('WeexDemo.app') > 0;
       if (isAndroidAssets) {
         nativeBase = 'file://assets/';
@@ -42,9 +42,9 @@
         if (matches && matches.length >= 2) {
           host = matches[1];
         }
-        nativeBase = '//' + host + '/' + this.dir + '/build/';
+        nativeBase = '//' + host + '/' + root + '/build/' + subRoot;
       }
-      var h5Base = './index.html?page=./' + this.dir + '/build/';
+      var h5Base = './index.html?page=./' + root + '/build/' + subRoot;
       // in Native
       var base = nativeBase;
       if (typeof window === 'object') {
@@ -63,3 +63,6 @@
     }
   }
 </script>
+
+<style>
+</style>

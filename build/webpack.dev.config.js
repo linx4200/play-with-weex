@@ -13,7 +13,7 @@ function walk(dir) {
       var fullpath = path.join(directory, file);
       var stat = fs.statSync(fullpath);
       var extname = path.extname(fullpath);
-      if (stat.isFile() && extname === '.vue') {
+      if (stat.isFile() && extname === '.we') {
         var name = path.join('src', 'build', dir, path.basename(file, extname));
         entry[name] = fullpath + '?entry=true';
       } else if (stat.isDirectory() && file !== 'build' && file !== 'include') {
@@ -25,12 +25,6 @@ function walk(dir) {
 
 walk();
 
-var banner = '// { "framework": "Vue" }\n'
-
-var bannerPlugin = new webpack.BannerPlugin(banner, {
-  raw: true
-})
-
 var webpackConfig = {
   entry: entry,
   output : {
@@ -38,30 +32,41 @@ var webpackConfig = {
     publicPath: config.dev.assetsPublicPath,
     filename: '[name].js'
   },
-  resolve: {
-    extensions: ['', '.js', '.vue'],
-    fallback: [path.join(__dirname, '../node_modules')]
-  },
+  // resolve: {
+  //   extensions: ['', '.js', '.we'],
+  //   fallback: [path.join(__dirname, '../node_modules')]
+  // },
   module: {
     loaders: [
       {
-        test: /\.vue(\?[^?]+)?$/,
-        loader: 'weex-vue-loader'
+        test: /\.we(\?[^?]+)?$/,
+        loader: 'weex'
       }
+      // {
+      //   test: /\.js(\?[^?]+)?$/,
+      //   loader: 'weex?type=script'
+      // },
+      // {
+      //   test: /\.css(\?[^?]+)?$/,
+      //   loader: 'weex?type=style'
+      // },
+      // {
+      //   test: /\.html(\?[^?]+)?$/,
+      //   loader: 'weex?type=tpl'
+      // }
     ]
   },
-  plugins: [
-    bannerPlugin,
-    // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ]
+  // plugins: [
+  //   // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
+  //   new webpack.optimize.OccurenceOrderPlugin(),
+  //   new webpack.HotModuleReplacementPlugin(),
+  //   new webpack.NoErrorsPlugin()
+  // ]
 }
 
 // add hot-reload related code to entry chunks
-Object.keys(webpackConfig.entry).forEach(function (name) {
-  webpackConfig.entry[name] = ['./build/dev-client'].concat(webpackConfig.entry[name])
-})
+// Object.keys(webpackConfig.entry).forEach(function (name) {
+//   webpackConfig.entry[name] = ['./build/dev-client'].concat(webpackConfig.entry[name])
+// })
 
 module.exports = webpackConfig;

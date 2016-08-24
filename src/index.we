@@ -1,0 +1,17 @@
+<template>
+  <example-list items="{{items}}" root="{{root}}"></example-list>
+</template>
+
+<script>
+  require('./include/example-list.we');
+  module.exports = {
+    data: {
+      root: 'src',
+      items: [
+        // `name` key is the example filename without '.we'
+        // Support sub directory, e.g. 'new-fashion/index'
+        {name: 'hello', title: 'Hello World'},
+      ]
+    }
+  }
+</script>
